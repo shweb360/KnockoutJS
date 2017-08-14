@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="../Scripts/Utils/utils.js"></script>
+    <script src="../Scripts/Utils/common.js"></script>
+
+
+    <link rel="stylesheet" href="../Content/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="../Content/assets/css/admin.css">
+    <link rel="stylesheet" href="../Content/assets/css/app.css">
+</head>
+<body>
+
+    <div>
+
+        <div class="tpl-portlet-components">
+            <div class="portlet-title">
+                <div class="caption font-green bold">
+                    <span class="am-icon-wpforms"></span>
+                    编辑基本信息
+                </div>
+            </div>
+            <div class="tpl-block ">
+
+                <div class="am-g tpl-amazeui-form">
+                    <div class="am-u-md-12">
+                        <form class="am-form am-form-horizontal">
+                            <div class="am-form-group">
+                                <label class="am-u-md-2 am-form-label">姓名：</label>
+                                <div class="am-u-md-3">
+                                    <input type="text" id="xm" name="xm" data-bind="value: userFrom.xm">
+                                </div>
+                                <label class="am-u-md-2 am-form-label">性别：</label>
+                                <div class="am-u-md-3">
+                                    <div class="am-form-group">
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="sex" value="男" data-bind="checked: userFrom.xbstr">
+                                            男
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="sex" value="女" data-bind="checked: userFrom.xbstr">
+                                            女
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-phone" class="am-u-md-2 am-form-label">籍贯：</label>
+                                <div class="am-u-md-3">
+                                    <input id="jg" name="jg" data-bind="value: userFrom.jg" type="text">
+                                </div>
+                                <label for="user-phone" class="am-u-md-2 am-form-label">民族：</label>
+                                <div class="am-u-md-3">
+                                    <input id="mz" name="mz" data-bind="value: userFrom.mz" type="text">
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-phone" class="am-u-md-2 am-form-label">身份证件：</label>
+                                <div class="am-u-md-3">
+                                    <select id="sltzjlx" data-bind="options: zjList, optionsValue: 'value', optionsText: 'text', value: userFrom.zjlx"></select>
+                                </div>
+                                <div class="am-u-md-5">
+                                    <input id="zjh" name="zjh" data-bind="value: userFrom.zjh" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-phone" class="am-u-md-2 am-form-label">是否在职：</label>
+                                <div class="am-u-md-3">
+                                    <div class="am-form-group">
+                                        <label class="am-radio-inline">
+                                            <input name="zzzt" value="在职" data-bind="checked: userFrom.zzztstr" type="radio" />
+                                            在职
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input name="zzzt" value="离退休" data-bind="checked: userFrom.zzztstr" type="radio" />
+                                            离退休
+                                        </label>
+                                    </div>
+                                </div>
+                                <label for="user-phone" class="am-u-md-2 am-form-label">文化程度：</label>
+                                <div class="am-u-md-3">
+                                    <div class="am-form-group">
+                                        <select id="sltwhcd" style="width: 160px;" data-bind="options: whcdList, optionsValue: 'value', optionsText: 'text', value: userFrom.whcd"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-phone" class="am-u-md-2 am-form-label">政治面貌：</label>
+                                <div class="am-u-md-3">
+                                    <select id="sltzzmm" data-bind="options: zzmmList, optionsValue: 'value', optionsText: 'text', value: userFrom.zzmm"></select>
+                                </div>
+                                <label for="user-phone" class="am-u-md-2 am-form-label">职业：</label>
+                                <div class="am-u-md-3">
+                                    <input id="zy" name="zy" data-bind="value: userFrom.zy" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-phone" class="am-u-md-2 am-form-label">开户银行：</label>
+                                <div class="am-u-md-3">
+                                    <select id="sltkfyh" data-bind="options: khyhList, optionsValue: 'value', optionsText: 'text', value: userFrom.khyh"></select>
+                                </div>
+                                <div class="am-u-md-5">
+                                    <input id="yhkh" name="yhkh" data-bind="value: userFrom.yhkh" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-phone" class="am-u-md-2 am-form-label">职称：</label>
+                                <div class="am-u-md-3">
+                                    <select id="sltzc" data-bind="options: zcList, optionsValue: 'value', optionsText: 'text', value: userFrom.zc"></select>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <div class="am-u-md-3 am-u-md-push-2">
+                                    <input name="" type="button" value="确认" data-bind="click: confirmClick" class="am-btn am-btn-primary am-btn-sm" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        var viewModel = function () {
+            var that = this;
+
+            this.zzmmList = [{ value: "中国共产党", text: "中国共产党" }, { value: "中国国民党革命委员会", text: "中国国民党革命委员会" },
+            { value: "中国民主同盟", text: "中国民主同盟" }, { value: "中国民主建国会", text: "中国民主建国会" },
+            { value: "中国民主促进会", text: "中国民主促进会" }, { value: "中国农工民主党", text: "中国农工民主党" },
+            { value: "中国致公党", text: "中国致公党" }, { value: "九三学社", text: "九三学社" }, { value: "台湾民主自治同盟", text: "台湾民主自治同盟" }];
+
+            this.zjList = [{ value: "身份证", text: "身份证" }, { value: "护照", text: "护照" }, { value: "签证", text: "签证" },
+            { value: "军官证", text: "军官证" }];
+
+            this.whcdList = [{ value: "大学", text: "大学" }, { value: "硕士", text: "硕士" },
+            { value: "博士", text: "博士" }, { value: "博士后", text: "博士后" }];
+
+            this.khyhList = [{ value: "-1", text: "请选择" }, { value: "0", text: "光大银行" }, { value: "1", text: "工商银行" },
+            { value: "2", text: "建设银行" }, { value: "3", text: "浦发银行" }];
+
+            this.zcList = [{ value: "高级工程师", text: "高级工程师" }, { value: "教授级高级工程师", text: "教授级高级工程师" },
+            { value: "高级经济师", text: "高级经济师" }, { value: "副教授", text: "副教授" },
+            { value: "教授", text: "教授" }, { value: "助理研究员", text: "助理研究员" },
+            { value: "研究员", text: "研究员" }, { value: "技师", text: "技师" }];
+
+
+            this.userFrom = {
+                 id: 1,
+                zjid: ko.observable(''),
+                xm: ko.observable('123'),
+                xb: ko.observable(''),
+                jg: ko.observable(''),
+                mz: ko.observable(''),
+                zjlx: ko.observable(''),
+                zjh: ko.observable(''),
+                zzzt: ko.observable(''),
+                whcd: ko.observable(''),
+                zzmm: ko.observable(''),
+                khyh: ko.observable(''),
+                zy: ko.observable(''),
+                zc: ko.observable(''),
+                yhkh: ko.observable(''),
+                xbstr: ko.observable(''),
+                zzztstr: ko.observable(''),
+                khyhstr: ko.observable('')
+
+            };
+
+
+
+            this.confirmClick = function () {
+                //debugger;
+                var post = ko.toJS(that.userFrom);
+                if (post.xbstr == "男") {
+                    post.xb = 1;
+                } else {
+                    post.xb = 0;
+                }
+                if (post.zzztstr == "在职") {
+                    post.zzzt = 1;
+                } else {
+                    post.zzzt = 0;
+                }
+
+
+                alert(JSON.stringify(post));
+
+            };
+            this.getyhstr = function (yhid) {
+                for (var i = 0; i < that.khyhList.length; i++) {
+                    if (that.khyhList[i].value == yhid) {
+                        return that.khyhList[i].text;
+              
+                    }
+                }
+                return "";
+            };
+
+
+        };
+
+        ko.applyBindings(new viewModel);
+ 
+    </script>
+</body>
+</html>

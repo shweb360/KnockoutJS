@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="../Scripts/Utils/utils.js"></script>
+    <script src="../Scripts/Utils/common.js"></script>
+
+
+    <link rel="stylesheet" href="../Content/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="../Content/assets/css/admin.css">
+    <link rel="stylesheet" href="../Content/assets/css/app.css">
+</head>
+<body>
+
+    <div data-bind="visible: displayview">
+        <div class="tpl-portlet-components">
+            <div class="portlet-title">
+                <div class="caption font-green bold">
+                    <span class="am-icon-wpforms"></span>我的工作经历
+                </div>
+                <div class="tpl-portlet-input tpl-fz-ml">
+                    <div class="portlet-input input-inline">
+                        <input name="" type="button" value="新增任务" class="am-btn am-btn-primary" data-bind="click: changeEdit" />
+                    </div>
+                </div>
+            </div>
+            <div class="tpl-block ">
+
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form">
+                            <table class="am-table am-table-striped am-table-hover table-main">
+                                <thead>
+                                    <tr>
+                                        <th>工作单位</th>
+                                        <th>起始时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: list">
+                                    <tr>
+                                        <td>
+                                            <span data-bind="text: gzdw"></span>
+                                        </td>
+                                        <td>
+                                            <span data-bind="text: qqrq"></span>
+                                        </td>
+                                        <td>
+                                            <button type="button" data-bind="click: $parent.delete">删除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div data-bind="visible: !displayview()">
+        <div class="tpl-portlet-components">
+            <div class="portlet-title">
+                <div class="caption font-green bold">
+                    <span class="am-icon-wpforms"></span> 新增工作经历
+                </div>
+            </div>
+            <div class="tpl-block ">
+
+                <div class="am-g tpl-amazeui-form">
+                    <div class="am-u-md-12">
+                        <form class="am-form am-form-horizontal">
+                            <div class="am-form-group">
+                                <label class="am-u-md-3 am-form-label">工作单位：</label>
+                                <div class="am-u-md-7">
+                                    <input id="Text1" name="xm" data-bind="value: userFrom.gzdw" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-md-3 am-form-label">起讫日期：</label>
+                                <div class="am-u-md-7">
+                                    <input id="jg" name="jg" data-bind="value: userFrom.qqrq" type="text" />
+                                </div>
+                            </div>
+
+
+
+                            <div class="am-form-group">
+                                <div class="am-u-md-3 am-u-md-push-3">
+                                    <input name="" type="button" value="确认" data-bind="click: confirmClick" class="am-btn am-btn-primary" />
+                                    <input name="" type="button" value="取消" data-bind="click: cancelClick" class="am-btn am-btn-default" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script type="text/javascript">
+        var httpUrl = com.getWebUrl();
+
+        var viewModel = function () {
+            var that = this;
+            this.displayview = ko.observable(true);
+            this.list = ko.observableArray([]);
+
+            this.userFrom = {
+                zjid: 0,
+                gzdw: ko.observable(''),
+
+                qqrq: ko.observable(''),
+
+                deleteStatus: 0,
+            };
+            this.changeEdit = function () {
+                that.displayview(false);
+            };
+            this.confirmClick = function () {
+
+                var post = ko.toJS(that.userFrom);
+
+                var ischange = false;
+                if (post.gzdw != '' && post.qqrq != '') {
+                    ischange = true;
+                }
+                if (ischange) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/api/Values/Post',
+                        dataType: "json",
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify(post),
+                        method: 'post',
+                        success: function (d) {
+
+                            if (d.type > 0) {
+                                alert("添加成功!");
+                                that.displayview(true);
+                                that.getuserdate();
+                                //window.location.reload();
+                            }
+                        }
+                    }).error(function (xhr, status) {
+                        alert("修改失败，请检查网络是否联通或联系管理员！");
+                    });
+                } else {
+                    alert("信息填写不完整！");
+                }
+
+            };
+            this.delete = function () {
+                if (confirm('是否确定删除？')) {
+                    var id = this.id;
+                    $.ajax({
+                        type: 'delete',
+                        url: '/api/Values/Delete/' + id,
+
+                        success: function (d) {
+                            if (d.type > 0) {
+                                that.getuserdate();
+                                that.displayview(true);
+                            }
+                            else {
+                                alert('删除失败！');
+                            }
+                        }
+                    }).error(function (xhr, status) {
+                        debugger;
+                        alert(xhr);
+                    });
+                }
+
+            }
+            this.cancelClick = function () {
+                that.displayview(true);
+            }
+
+            this.getuserdate = function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/api/Values/GetList/?time=' + new Date().valueOf,
+
+                    success: function (d) {
+                        if (d.expertInfoEducation) {
+                            that.list(d.expertInfoEducation);
+
+                        }
+                    }
+                }).error(function (xhr, status) {
+                    alert(xhr);
+                });
+
+            }
+            that.getuserdate();
+        };
+        ko.applyBindings(new viewModel);
+
+    </script>
+</body>
+</html>
